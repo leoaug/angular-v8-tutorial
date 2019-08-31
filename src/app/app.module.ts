@@ -16,7 +16,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule, MatCardModule, MatTableModule, MatTabsModule } from '@angular/material';
-import { UsuarioService } from './service/usuario/usuario.service';
+import { UsuarioService } from './service/usuario.service';
 
 @NgModule({
   declarations: [

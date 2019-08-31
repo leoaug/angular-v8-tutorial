@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Usuario } from '../model/Usuario';
 
 @Component({
   selector: 'app-salvar-usuario',
@@ -6,10 +7,22 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./salvar-usuario.component.css']
 })
 export class SalvarUsuarioComponent implements OnInit {
+ 
 
-  constructor() { }
+  usuario: Usuario = new Usuario();
 
-  ngOnInit() {
+
+  constructor() {
   }
 
+  ngOnInit() {
+    
+    this.usuario.sexo = "Masculino";
+  }
+
+  salvarUsuario(usuario: Usuario){
+    console.log(usuario);
+    usuario.nome = "";
+    usuario.sexo = "Masculino";
+  }
 }

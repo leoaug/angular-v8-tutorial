@@ -1,29 +1,35 @@
 <mat-card>
     Cadastro de Usuários
-    <div class="example-container">
-      <mat-form-field>
-        <input matInput placeholder="Nome">
-      </mat-form-field>
+    <!-- 
+    <form novalidate [formGroup]="usuarioForm">  
+  -->
+      <div class="example-container">
+          <mat-form-field>
+            <input matInput placeholder="Nome" [(ngModel)]="usuario.nome"> 
+          </mat-form-field>
 
-      <mat-radio-group aria-label="Select an option">
-         <mat-radio-button value="1">Masculino</mat-radio-button>
-         <mat-radio-button value="2">Feminino</mat-radio-button>
-      </mat-radio-group>
+          <mat-radio-group aria-label="Selecione" [(ngModel)]="usuario.sexo">
+            <mat-radio-button value="Masculino">Masculino</mat-radio-button>
+            <mat-radio-button value="Feminino">Feminino</mat-radio-button>
+          </mat-radio-group>
 
+          <!-- 
+          <mat-form-field>
+            <mat-select placeholder="Select">
+              <mat-option value="option">Option</mat-option>
+            </mat-select>
+          </mat-form-field>
+          -->
+        <button mat-button color="primary" (click)="salvarUsuario(usuario)">Salvar</button>
+      </div> 
+     <!--          
+    </form> 
+-->
+</mat-card>      
 
-      <mat-form-field>
-        <mat-select placeholder="Select">
-          <mat-option value="option">Option</mat-option>
-        </mat-select>
-      </mat-form-field>
-
-    <button mat-button color="primary">Salvar</button>
-
-
-    <app-listar-usuario></app-listar-usuario>
+<app-listar-usuario></app-listar-usuario>
     
-  </div>  
-</mat-card>
+
 
 <!-- 
 <div class="card">
