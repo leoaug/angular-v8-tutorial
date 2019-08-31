@@ -7,16 +7,12 @@ import { ListarUsuarioComponent } from './listar-usuario/listar-usuario.componen
 
 const routes: Routes = [
   {
-    path: "usuario/salvarUsuario",
+    path: "criarUsuario",
     component:SalvarUsuarioComponent
   },
   {
-    path: "usuario/alterarUsuario",
+    path: "criarTarefa",
     component: AlterarUsuarioComponent
-  },
-  {
-    path: "usuario/listarUsuarios",
-    component:ListarUsuarioComponent
   }
 
 ];
