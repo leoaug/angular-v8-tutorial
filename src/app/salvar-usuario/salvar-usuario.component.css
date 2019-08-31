@@ -9,4 +9,9 @@
 .mat-radio-button ~ .mat-radio-button {
   margin-left: 16px;
 }
+.example-button-row button,
+.example-button-row a {
+  margin-right: 8px;
+}
+
 

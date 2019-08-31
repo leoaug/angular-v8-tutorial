@@ -9,13 +9,14 @@ import { SalvarUsuarioComponent } from './salvar-usuario/salvar-usuario.componen
 import { AlterarUsuarioComponent } from './alterar-usuario/alterar-usuario.component';
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatFormFieldModule} from '@angular/material/form-field'; 
-import {MatButtonModule} from '@angular/material/button';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-import {MatRadioModule} from '@angular/material/radio';
-import {MatSelectModule} from '@angular/material/select';
-import {MatInputModule} from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatFormFieldModule } from '@angular/material/form-field'; 
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule, MatCardModule, MatTableModule, MatTabsModule } from '@angular/material';
+import { UsuarioService } from './service/usuario/usuario.service';
 
 @NgModule({
   declarations: [
@@ -37,9 +38,14 @@ import {MatInputModule} from '@angular/material';
     MatCheckboxModule,
     MatRadioModule,
     MatSelectModule,
+    MatCardModule,
+    MatTableModule,
+    MatTabsModule,
     MatInputModule
   ],
-  providers: [],
+  providers: [
+    UsuarioService  
+  ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
   bootstrap: [AppComponent]
 })

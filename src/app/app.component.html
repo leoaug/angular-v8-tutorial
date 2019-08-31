@@ -1,5 +1,21 @@
 
 <ng2-slim-loading-bar color="blue"></ng2-slim-loading-bar>
+
+
+<nav mat-tab-nav-bar>
+  <a mat-tab-link 
+     [routerLink]="['/criarUsuario']" routerLinkActive="router-link-active" >
+    Criar Usuário
+  </a>
+  <a mat-tab-link 
+     [routerLink]="['/criarTarefa']" routerLinkActive="router-link-active" >
+    Criar Tarefa
+  </a>
+</nav>
+
+
+
+<!-- 
 <nav class="navbar navbar-expand-sm bg-light">
   <div class="container-fluid">
     <ul class="navbar-nav">
@@ -16,7 +32,7 @@
     </ul>
   </div>
 </nav>
-
+-->
 <div class="container">
   <router-outlet></router-outlet>
 </div>
