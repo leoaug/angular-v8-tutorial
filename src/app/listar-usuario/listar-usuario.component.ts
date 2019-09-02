@@ -1,13 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { Usuario } from '../model/Usuario';
+import { MatTableDataSource } from '@angular/material';
 
-
-/* 
-const USUARIOS: Usuario[] = [
-  {nome: 'Leonardo', sexo: 'Masculino'},
-  {nome: 'Josias', sexo: 'Masculino'}, 
-];
-*/
 
 @Component({
   selector: 'app-listar-usuario',
@@ -15,20 +9,58 @@ const USUARIOS: Usuario[] = [
   styleUrls: ['./listar-usuario.component.css']
 })
 export class ListarUsuarioComponent implements OnInit {
+  
+  
+  @Input() 
+  usuarioListar: Usuario;
+
+  @Input()
+  bodyDivListar: boolean;
 
   listaUsuarios: Array <Usuario> = [];
 
+  dataSource: MatTableDataSource <Usuario>;
+
   displayedColumns: string[] = ['Nome', 'Sexo'];
-  
+ 
   constructor() {
+    //this.listaUsuarios = [];
+    this.dataSource = new MatTableDataSource<Usuario>();
   }
 
-  ngOnInit() {
-    let usuario = new Usuario();
-    usuario.nome = "Leonardo";
-    usuario.sexo = "Masculino";
-    this.listaUsuarios.push(usuario);
+  ngOnInit(): void {
+   
+  }
+  
+    
+  ngOnChanges(changes: SimpleChanges) {
+    
+    
+
+    console.log("caiu no ngOnChanges bodyDivListar = "+this.bodyDivListar);
+    //console.log(this.usuarioListar);
+    
+    if(this.bodyDivListar == true){
+      this.listaUsuarios = [];
+    } else {
+      this.listaUsuarios.push(this.usuarioListar);
+      //this.dataSource = new MatTableDataSource<Usuario>(this.listaUsuarios);
+
+      this.dataSource.data.push(this.usuarioListar);
+    }
+
+   
+    console.log(this.listaUsuarios);
+
+
+    //this.dataSource.data.push(this.usuarioListar);
+    
+    //this.dataSource = new MatTableDataSource<Usuario>(changes.usuario.currentValue);
   }
  
-
+ 
+    
 }
+ 
+
+

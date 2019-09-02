@@ -20,15 +20,16 @@
             </mat-select>
           </mat-form-field>
           -->
-        <button mat-button color="primary" (click)="salvarUsuario(usuario)">Salvar</button>
+        <button mat-button color="primary" (click)="salvarUsuario()">Salvar</button>
       </div> 
      <!--          
     </form> 
 -->
 </mat-card>      
 
-<app-listar-usuario></app-listar-usuario>
-    
+<div [hidden]='bodyDiv'>
+  <app-listar-usuario [usuarioListar]="usuarioParam" [bodyDivListar]="bodyDiv"></app-listar-usuario>  
+</div>
 
 
 <!-- 

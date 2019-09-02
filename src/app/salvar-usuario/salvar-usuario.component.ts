@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Usuario } from '../model/Usuario';
+import * as cloneDeep from 'lodash/cloneDeep';
 
 @Component({
   selector: 'app-salvar-usuario',
@@ -8,21 +9,29 @@ import { Usuario } from '../model/Usuario';
 })
 export class SalvarUsuarioComponent implements OnInit {
  
-
   usuario: Usuario = new Usuario();
 
+  usuarioParam: Usuario;
 
+  bodyDiv = true;
+  
+  
   constructor() {
   }
 
-  ngOnInit() {
-    
+  ngOnInit() {   
     this.usuario.sexo = "Masculino";
   }
 
-  salvarUsuario(usuario: Usuario){
-    console.log(usuario);
-    usuario.nome = "";
-    usuario.sexo = "Masculino";
+  salvarUsuario(){
+    this.bodyDiv = false;
+
+    this.usuarioParam = cloneDeep(this.usuario);
+
+    this.usuario  = new Usuario();
+
+    this.usuario.sexo = "Masculino";
+
+
   }
 }
