@@ -1,6 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
 import { Usuario } from '../model/Usuario';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatDialog } from '@angular/material';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 
 
 @Component({
@@ -10,10 +11,17 @@ import { MatTableDataSource } from '@angular/material';
 })
 export class ListarUsuarioComponent implements OnInit {
   
-  
+  /**
+   * recebendo o objeto usuarioParam do salvar-usuario.component.ts
+   * @see  <app-listar-usuario [usuarioListar]="usuarioParam" [bodyDivListar]="bodyDiv"></app-listar-usuario>  
+   */
   @Input() 
   usuarioListar: Usuario;
 
+  /**
+   * recebendo o objeto bodyDiv do salvar-usuario.component.ts
+   * @see  <app-listar-usuario [usuarioListar]="usuarioParam" [bodyDivListar]="bodyDiv"></app-listar-usuario>  
+   */
   @Input()
   bodyDivListar: boolean;
 
@@ -21,44 +29,37 @@ export class ListarUsuarioComponent implements OnInit {
 
   dataSource: MatTableDataSource <Usuario>;
 
-  displayedColumns: string[] = ['Nome', 'Sexo'];
+  displayedColumns: string[] = ['Nome', 'Sexo','Ações'];
  
-  constructor() {
-    //this.listaUsuarios = [];
-    this.dataSource = new MatTableDataSource<Usuario>();
+  constructor(public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
-   
   }
   
     
   ngOnChanges(changes: SimpleChanges) {
     
-    
-
-    console.log("caiu no ngOnChanges bodyDivListar = "+this.bodyDivListar);
-    //console.log(this.usuarioListar);
-    
-    if(this.bodyDivListar == true){
-      this.listaUsuarios = [];
-    } else {
+     
+    if(this.bodyDivListar == false){
       this.listaUsuarios.push(this.usuarioListar);
-      //this.dataSource = new MatTableDataSource<Usuario>(this.listaUsuarios);
-
-      this.dataSource.data.push(this.usuarioListar);
+      this.dataSource = new MatTableDataSource<Usuario>(this.listaUsuarios);
     }
-
-   
-    console.log(this.listaUsuarios);
-
-
-    //this.dataSource.data.push(this.usuarioListar);
-    
-    //this.dataSource = new MatTableDataSource<Usuario>(changes.usuario.currentValue);
+     
   }
  
- 
+  confirmarExcluirUsuario(usuario: Usuario): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '350px',
+      data: "Confirma Exclusão do(a) "+usuario.nome+" ?"
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        this.listaUsuarios.splice(this.listaUsuarios.indexOf(usuario),1);
+        this.dataSource = new MatTableDataSource<Usuario>(this.listaUsuarios);       
+     }
+    });
+  }
     
 }
  

@@ -11,6 +11,11 @@ export class SalvarUsuarioComponent implements OnInit {
  
   usuario: Usuario = new Usuario();
 
+  /**
+   *
+   * usado para passar para o componente listar-usuario.component.ts
+   * @see  <app-listar-usuario [usuarioListar]="usuarioParam" [bodyDivListar]="bodyDiv"></app-listar-usuario>  
+   */
   usuarioParam: Usuario;
 
   bodyDiv = true;
@@ -26,10 +31,13 @@ export class SalvarUsuarioComponent implements OnInit {
   salvarUsuario(){
     this.bodyDiv = false;
 
+    // copiando o model usuario para usuarioParam para passar para o componente listar-usuario.component.ts
     this.usuarioParam = cloneDeep(this.usuario);
 
+    //limpando o formulario salvar.usuario.component.html
     this.usuario  = new Usuario();
 
+    //setando como default o valor do radioButton do formulario salvar.usuario.component.html
     this.usuario.sexo = "Masculino";
 
 
