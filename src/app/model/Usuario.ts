@@ -1,4 +1,8 @@
+import { Tarefa } from './Tarefa';
+
 export class Usuario {
+    id: number;
     nome: string;
-    sexo: string;
+    sexoUsuarioEnum: string;
+    listaTarefas: Array <Tarefa>;
 }

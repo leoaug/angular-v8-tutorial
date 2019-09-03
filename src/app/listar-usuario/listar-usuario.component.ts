@@ -3,6 +3,7 @@ import { Usuario } from '../model/Usuario';
 import { MatTableDataSource, MatDialog } from '@angular/material';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { SalvarUsuarioComponent } from '../salvar-usuario/salvar-usuario.component';
+import { UsuarioService } from '../service/usuario.service';
 
 
 @Component({
@@ -24,26 +25,48 @@ export class ListarUsuarioComponent implements OnInit {
    * @see  <app-listar-usuario [usuarioListar]="usuarioParam" [bodyDivListar]="bodyDiv"></app-listar-usuario>  
    */
   @Input()
-  bodyDivListar: boolean;
+  esconderComponenteListarUsuario: boolean;
 
   listaUsuarios: Array <Usuario> = [];
 
   dataSource: MatTableDataSource <Usuario>;
 
-  displayedColumns: string[] = ['Nome', 'Sexo','Ações'];
+  displayedColumns: string[] = ['Nome', 'Sexo','Tarefas','Ações'];
  
-  constructor(public dialog: MatDialog,public salvarUsuarioComponent: SalvarUsuarioComponent) {
+  constructor(public dialog: MatDialog,
+              public salvarUsuarioComponent: SalvarUsuarioComponent,
+              public usuarioService: UsuarioService) {
   }
 
   ngOnInit(): void {
+    this.usuarioService.getUsuarios().subscribe( listaTodosUsuarios => {
+      
+
+      this.listaUsuarios = listaTodosUsuarios;
+
+      console.log(this.listaUsuarios);
+
+      this.dataSource = new MatTableDataSource<Usuario>(this.listaUsuarios);
+
+      this.salvarUsuarioComponent.esconderComponenteListarUsuario = false;
+     
+    });
+     
   }
   
     
   ngOnChanges(changes: SimpleChanges) {
+       
+    
+    if(this.esconderComponenteListarUsuario == false && this.usuarioListar.nome != null){
+       
+       this.listaUsuarios.push(this.usuarioListar);
+       this.dataSource = new MatTableDataSource<Usuario>(this.listaUsuarios);
+    
+    } else if(this.listaUsuarios.length == 0) {
         
-    if(this.bodyDivListar == false){
-      this.listaUsuarios.push(this.usuarioListar);
-      this.dataSource = new MatTableDataSource<Usuario>(this.listaUsuarios);
+      this.salvarUsuarioComponent.esconderComponenteListarUsuario = true;
+    
     }
      
   }
@@ -58,7 +81,7 @@ export class ListarUsuarioComponent implements OnInit {
             this.listaUsuarios.splice(this.listaUsuarios.indexOf(usuario),1);
             this.dataSource = new MatTableDataSource<Usuario>(this.listaUsuarios);  
             if(this.listaUsuarios.length == 0){
-              this.salvarUsuarioComponent.bodyDiv = true;
+              this.salvarUsuarioComponent.esconderComponenteListarUsuario = true;
             }              
         }
     });

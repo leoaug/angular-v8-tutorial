@@ -8,9 +8,9 @@
             <input matInput placeholder="Nome" [(ngModel)]="usuario.nome"> 
           </mat-form-field>
 
-          <mat-radio-group aria-label="Selecione" [(ngModel)]="usuario.sexo">
-            <mat-radio-button value="Masculino">Masculino</mat-radio-button>
-            <mat-radio-button value="Feminino">Feminino</mat-radio-button>
+          <mat-radio-group aria-label="Selecione" [(ngModel)]="usuario.sexoUsuarioEnum">
+            <mat-radio-button value="MASCULINO">Masculino</mat-radio-button>
+            <mat-radio-button value="FEMININO">Feminino</mat-radio-button>
           </mat-radio-group>
 
           <!-- 
@@ -20,15 +20,15 @@
             </mat-select>
           </mat-form-field>
           -->
-        <button mat-button color="primary" (click)="salvarUsuario()">Salvar</button>
+        <button mat-raised-button (click)="salvarUsuario()">Salvar</button>
       </div> 
      <!--          
     </form> 
 -->
 </mat-card>      
 
-<div [hidden]='bodyDiv'>
-  <app-listar-usuario [usuarioListar]="usuarioParam" [bodyDivListar]="bodyDiv"></app-listar-usuario>  
+<div [hidden]='esconderComponenteListarUsuario'>
+  <app-listar-usuario [usuarioListar]="usuarioParam" [esconderComponenteListarUsuario]="esconderComponenteListarUsuario"></app-listar-usuario>  
 </div>
 
 

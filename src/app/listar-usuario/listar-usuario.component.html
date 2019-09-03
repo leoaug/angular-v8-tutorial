@@ -25,19 +25,41 @@
   <!-- Weight Column -->
   <ng-container matColumnDef="Sexo">
     <th mat-header-cell *matHeaderCellDef> Sexo </th>
-    <td mat-cell *matCellDef="let usuario"> {{ usuario.sexo }} </td>
+    <td mat-cell *matCellDef="let usuario"> {{ usuario.sexoUsuarioEnum }} </td>
+  </ng-container>
+
+    <!-- Weight Column -->
+  <ng-container matColumnDef="Tarefas">
+    
+    <th style="text-align: center;" mat-header-cell *matHeaderCellDef> Tarefas </th>
+    <td style="text-align: center;" mat-cell *matCellDef="let usuario"> 
+       <mat-nav-list>
+        <a style="align: center;" mat-list-item *ngFor="let tarefa of usuario.listaTarefas"> {{ tarefa.nome }} </a>
+      </mat-nav-list>   
+    </td>
+   
   </ng-container>
 
   <ng-container matColumnDef="Ações">
-      <th mat-header-cell *matHeaderCellDef> Excluir </th>
+      <th style="text-align: center;" mat-header-cell *matHeaderCellDef> Ações </th>
 
-      <td mat-cell *matCellDef="let usuario">
-
-        <a style="cursor: pointer;" (click)="confirmarExcluirUsuario(usuario)">  
-          <i class="material-icons">delete</i> 
-        </a>
-
-      </td>
+      <td style="text-align: center;padding: 1px;" mat-cell *matCellDef="let usuario">
+       
+          <button mat-mini-fab color="primary" 
+                  matTooltip="Excluir" 
+                  (click)="confirmarExcluirUsuario(usuario)">
+                
+                  <span class="mdc-fab__icon material-icons"> delete </span>
+         
+          </button>
+      
+          <button mat-mini-fab color="primary" 
+                  matTooltip="Editar">
+                <span class="mdc-fab__icon material-icons"> edit </span>
+          </button>
+             
+      </td>   
+     
 
   </ng-container>
 

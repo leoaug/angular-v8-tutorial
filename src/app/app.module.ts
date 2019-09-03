@@ -15,9 +15,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
-import { MatInputModule, MatCardModule, MatTableModule, MatTabsModule, MatDialogModule } from '@angular/material';
+import { MatInputModule, MatCardModule, MatTableModule, MatTabsModule, MatDialogModule, MatTooltipModule, MatDividerModule, MatListModule } from '@angular/material';
 import { UsuarioService } from './service/usuario.service';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
     ConfirmationDialogComponent 
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     CommonModule,
     AppRoutingModule,
@@ -44,6 +46,9 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
     MatTableModule,
     MatTabsModule,
     MatDialogModule,
+    MatTooltipModule,
+    MatDividerModule,
+    MatListModule,
     MatInputModule
   ],
   providers: [
