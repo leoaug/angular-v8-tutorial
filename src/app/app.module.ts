@@ -15,15 +15,17 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
-import { MatInputModule, MatCardModule, MatTableModule, MatTabsModule } from '@angular/material';
+import { MatInputModule, MatCardModule, MatTableModule, MatTabsModule, MatDialogModule } from '@angular/material';
 import { UsuarioService } from './service/usuario.service';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ListarUsuarioComponent,
     SalvarUsuarioComponent,
-    AlterarUsuarioComponent 
+    AlterarUsuarioComponent,
+    ConfirmationDialogComponent 
   ],
   imports: [
     BrowserModule,
@@ -41,10 +43,14 @@ import { UsuarioService } from './service/usuario.service';
     MatCardModule,
     MatTableModule,
     MatTabsModule,
+    MatDialogModule,
     MatInputModule
   ],
   providers: [
     UsuarioService  
+  ],
+  entryComponents: [
+    ConfirmationDialogComponent
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
   bootstrap: [AppComponent]
