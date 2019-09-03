@@ -10,15 +10,17 @@ import { AlterarUsuarioComponent } from './alterar-usuario/alterar-usuario.compo
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatFormFieldModule } from '@angular/material/form-field'; 
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
-import { MatInputModule, MatCardModule, MatTableModule, MatTabsModule, MatDialogModule, MatTooltipModule, MatDividerModule, MatListModule } from '@angular/material';
+// tslint:disable-next-line: max-line-length
+import { MatInputModule, MatCardModule, MatTableModule, MatTabsModule, MatDialogModule, MatTooltipModule, MatDividerModule, MatListModule, MatProgressSpinnerModule } from '@angular/material';
 import { UsuarioService } from './service/usuario.service';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { HttpClientModule } from '@angular/common/http';
+import { LoadingDialogComponent } from './loading-dialog/loading-dialog.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import { HttpClientModule } from '@angular/common/http';
     ListarUsuarioComponent,
     SalvarUsuarioComponent,
     AlterarUsuarioComponent,
-    ConfirmationDialogComponent 
+    ConfirmationDialogComponent,
+    LoadingDialogComponent 
   ],
   imports: [
     HttpClientModule,
@@ -49,13 +52,15 @@ import { HttpClientModule } from '@angular/common/http';
     MatTooltipModule,
     MatDividerModule,
     MatListModule,
+    MatProgressSpinnerModule,
     MatInputModule
   ],
   providers: [
-    UsuarioService  
+    UsuarioService
   ],
   entryComponents: [
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    LoadingDialogComponent
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
   bootstrap: [AppComponent]

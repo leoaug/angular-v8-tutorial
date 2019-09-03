@@ -1,9 +1,10 @@
-import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Usuario } from '../model/Usuario';
 import { MatTableDataSource, MatDialog } from '@angular/material';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { SalvarUsuarioComponent } from '../salvar-usuario/salvar-usuario.component';
 import { UsuarioService } from '../service/usuario.service';
+import { LoadingDialogComponent } from '../loading-dialog/loading-dialog.component';
 
 
 @Component({
@@ -12,17 +13,17 @@ import { UsuarioService } from '../service/usuario.service';
   styleUrls: ['./listar-usuario.component.css']
 })
 export class ListarUsuarioComponent implements OnInit {
-  
+
   /**
    * recebendo o objeto usuarioParam do salvar-usuario.component.ts
-   * @see  <app-listar-usuario [usuarioListar]="usuarioParam" [bodyDivListar]="bodyDiv"></app-listar-usuario>  
+   * @see  <app-listar-usuario [usuarioListar]="usuarioParam" [bodyDivListar]="bodyDiv"></app-listar-usuario>
    */
-  @Input() 
+  @Input()
   usuarioListar: Usuario;
 
   /**
    * recebendo o objeto bodyDiv do salvar-usuario.component.ts
-   * @see  <app-listar-usuario [usuarioListar]="usuarioParam" [bodyDivListar]="bodyDiv"></app-listar-usuario>  
+   * @see  <app-listar-usuario [usuarioListar]="usuarioParam" [bodyDivListar]="bodyDiv"></app-listar-usuario>
    */
   @Input()
   esconderComponenteListarUsuario: boolean;
@@ -31,63 +32,76 @@ export class ListarUsuarioComponent implements OnInit {
 
   dataSource: MatTableDataSource <Usuario>;
 
-  displayedColumns: string[] = ['Nome', 'Sexo','Tarefas','Ações'];
- 
+  displayedColumns: string[] = ['Nome', 'Sexo', 'Tarefas', 'Ações'];
+
   constructor(public dialog: MatDialog,
               public salvarUsuarioComponent: SalvarUsuarioComponent,
               public usuarioService: UsuarioService) {
   }
 
   ngOnInit(): void {
-    this.usuarioService.getUsuarios().subscribe( listaTodosUsuarios => {
-      
+    
+    const dialog =  this.dialog.open(LoadingDialogComponent, {});
 
-      this.listaUsuarios = listaTodosUsuarios;
 
-      console.log(this.listaUsuarios);
+    this.usuarioService.getUsuarios().subscribe(
+                    listaTodosUsuarios => ( 
+                            this.listaUsuarios = listaTodosUsuarios,
 
-      this.dataSource = new MatTableDataSource<Usuario>(this.listaUsuarios);
+                            console.log(this.listaUsuarios),
 
-      this.salvarUsuarioComponent.esconderComponenteListarUsuario = false;
-     
-    });
-     
+                            this.dataSource = new MatTableDataSource<Usuario>(this.listaUsuarios),
+
+                            this.salvarUsuarioComponent.esconderComponenteListarUsuario = false,
+
+                            dialog.close()
+
+                            ),
+                    error => (
+                        dialog.close(),
+                        console.log(error)
+                   )
+    );
+
   }
-  
-    
-  ngOnChanges(changes: SimpleChanges) {
-       
-    
-    if(this.esconderComponenteListarUsuario == false && this.usuarioListar.nome != null){
-       
+
+
+  // tslint:disable-next-line: use-lifecycle-interface
+  ngOnChanges() {
+
+    // tslint:disable-next-line: triple-equals
+    if (this.esconderComponenteListarUsuario == false && this.usuarioListar && this.usuarioListar.nome != null) {
+
        this.listaUsuarios.push(this.usuarioListar);
        this.dataSource = new MatTableDataSource<Usuario>(this.listaUsuarios);
-    
-    } else if(this.listaUsuarios.length == 0) {
-        
+
+    // tslint:disable-next-line: triple-equals
+    } else if (this.listaUsuarios.length == 0) {
+
       this.salvarUsuarioComponent.esconderComponenteListarUsuario = true;
-    
+
     }
-     
+
   }
- 
+
   confirmarExcluirUsuario(usuario: Usuario): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '350px',
-      data: "Confirma Exclusão do(a) "+usuario.nome+" ?"
+      data: 'Confirma Exclusão do(a) ' + usuario.nome + ' ?'
     });
     dialogRef.afterClosed().subscribe(result => {
-        if(result) {
-            this.listaUsuarios.splice(this.listaUsuarios.indexOf(usuario),1);
-            this.dataSource = new MatTableDataSource<Usuario>(this.listaUsuarios);  
-            if(this.listaUsuarios.length == 0){
+        if (result) {
+            this.listaUsuarios.splice(this.listaUsuarios.indexOf(usuario), 1);
+            this.dataSource = new MatTableDataSource<Usuario>(this.listaUsuarios);
+            // tslint:disable-next-line: triple-equals
+            if (this.listaUsuarios.length == 0) {
               this.salvarUsuarioComponent.esconderComponenteListarUsuario = true;
-            }              
+            }
         }
     });
   }
-    
+
 }
- 
+
 
 
