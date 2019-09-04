@@ -21,6 +21,8 @@ import { UsuarioService } from './service/usuario.service';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LoadingDialogComponent } from './loading-dialog/loading-dialog.component';
+import { ToastrModule } from 'ngx-toastr';
+
 
 @NgModule({
   declarations: [
@@ -29,7 +31,7 @@ import { LoadingDialogComponent } from './loading-dialog/loading-dialog.componen
     SalvarUsuarioComponent,
     AlterarUsuarioComponent,
     ConfirmationDialogComponent,
-    LoadingDialogComponent 
+    LoadingDialogComponent
   ],
   imports: [
     HttpClientModule,
@@ -53,14 +55,15 @@ import { LoadingDialogComponent } from './loading-dialog/loading-dialog.componen
     MatDividerModule,
     MatListModule,
     MatProgressSpinnerModule,
+    ToastrModule.forRoot(),
     MatInputModule
   ],
   providers: [
-    UsuarioService
+    UsuarioService,
   ],
   entryComponents: [
     ConfirmationDialogComponent,
-    LoadingDialogComponent
+    LoadingDialogComponent,
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
   bootstrap: [AppComponent]

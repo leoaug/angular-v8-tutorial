@@ -5,6 +5,7 @@ import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation
 import { SalvarUsuarioComponent } from '../salvar-usuario/salvar-usuario.component';
 import { UsuarioService } from '../service/usuario.service';
 import { LoadingDialogComponent } from '../loading-dialog/loading-dialog.component';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -36,6 +37,7 @@ export class ListarUsuarioComponent implements OnInit {
 
   constructor(public dialog: MatDialog,
               public salvarUsuarioComponent: SalvarUsuarioComponent,
+              public toast: ToastrService,
               public usuarioService: UsuarioService) {
   }
 
@@ -85,20 +87,23 @@ export class ListarUsuarioComponent implements OnInit {
   }
 
   confirmarExcluirUsuario(usuario: Usuario): void {
-    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      width: '350px',
-      data: 'Confirma Exclusão do(a) ' + usuario.nome + ' ?'
-    });
-    dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-            this.listaUsuarios.splice(this.listaUsuarios.indexOf(usuario), 1);
-            this.dataSource = new MatTableDataSource<Usuario>(this.listaUsuarios);
-            // tslint:disable-next-line: triple-equals
-            if (this.listaUsuarios.length == 0) {
-              this.salvarUsuarioComponent.esconderComponenteListarUsuario = true;
-            }
-        }
-    });
+      const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+        width: '350px',
+        data: 'Confirma Exclusão do(a) ' + usuario.nome + ' ?'
+      });
+      dialogRef.afterClosed().subscribe(result => {
+          if (result) {
+
+              this.toast.success('This is success toast.', 'Success!');
+            
+              this.listaUsuarios.splice(this.listaUsuarios.indexOf(usuario), 1);
+              this.dataSource = new MatTableDataSource<Usuario>(this.listaUsuarios);
+              // tslint:disable-next-line: triple-equals
+              if (this.listaUsuarios.length == 0) {
+                this.salvarUsuarioComponent.esconderComponenteListarUsuario = true;
+              }
+          }
+      });
   }
 
 }
