@@ -36,12 +36,12 @@ import { ToastrModule } from 'ngx-toastr';
   imports: [
     HttpClientModule,
     BrowserModule,
+    BrowserAnimationsModule,
     CommonModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     SlimLoadingBarModule,
-    BrowserAnimationsModule,
     MatFormFieldModule,
     MatButtonModule,
     MatCheckboxModule,

@@ -26,8 +26,8 @@ export class ListarUsuarioComponent implements OnInit {
    * recebendo o objeto bodyDiv do salvar-usuario.component.ts
    * @see  <app-listar-usuario [usuarioListar]="usuarioParam" [bodyDivListar]="bodyDiv"></app-listar-usuario>
    */
-  @Input()
-  esconderComponenteListarUsuario: boolean;
+  //@Input()
+  //esconderComponenteListarUsuario: boolean;
 
   listaUsuarios: Array <Usuario> = [];
 
@@ -46,33 +46,43 @@ export class ListarUsuarioComponent implements OnInit {
     const dialog =  this.dialog.open(LoadingDialogComponent, {});
 
 
-    this.usuarioService.getUsuarios().subscribe(
-                    listaTodosUsuarios => ( 
-                            this.listaUsuarios = listaTodosUsuarios,
+    this.usuarioService.getUsuarios().subscribe (
+          listaTodosUsuarios => {
+                  this.listaUsuarios = listaTodosUsuarios,
 
-                            console.log(this.listaUsuarios),
+                  console.log(this.listaUsuarios),
 
-                            this.dataSource = new MatTableDataSource<Usuario>(this.listaUsuarios),
+                  this.dataSource = new MatTableDataSource<Usuario>(this.listaUsuarios),
 
-                            this.salvarUsuarioComponent.esconderComponenteListarUsuario = false,
+                  this.salvarUsuarioComponent.esconderComponenteListarUsuario = false,
 
-                            dialog.close()
+                  dialog.close()
 
-                            ),
-                    error => (
-                        dialog.close(),
-                        console.log(error)
-                   )
-    );
+                  },
+          error => {
+              dialog.close(),
+              console.log(error)
+          }
+    ).add(() => {
+          this.renderizarComponenteListarUsuario(this.listaUsuarios);
+    });
 
   }
 
 
   // tslint:disable-next-line: use-lifecycle-interface
+  ngAfterViewInit() {
+    this.renderizarComponenteListarUsuario(this.listaUsuarios);
+  }
+
+  // tslint:disable-next-line: use-lifecycle-interface
   ngOnChanges() {
 
     // tslint:disable-next-line: triple-equals
-    if (this.esconderComponenteListarUsuario == false && this.usuarioListar && this.usuarioListar.nome != null) {
+    if (this.salvarUsuarioComponent.esconderComponenteListarUsuario == false &&
+        this.usuarioListar && 
+        this.usuarioListar.nome != null &&
+        this.usuarioListar.id != null) {
 
        this.listaUsuarios.push(this.usuarioListar);
        this.dataSource = new MatTableDataSource<Usuario>(this.listaUsuarios);
@@ -94,17 +104,39 @@ export class ListarUsuarioComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
           if (result) {
 
-              this.toast.success('This is success toast.', 'Success!');
-            
-              this.listaUsuarios.splice(this.listaUsuarios.indexOf(usuario), 1);
-              this.dataSource = new MatTableDataSource<Usuario>(this.listaUsuarios);
-              // tslint:disable-next-line: triple-equals
-              if (this.listaUsuarios.length == 0) {
-                this.salvarUsuarioComponent.esconderComponenteListarUsuario = true;
-              }
+              this.usuarioService.excluirUsuario(usuario).subscribe (
+                    retornoUsuario => (
+
+                          this.toast.success('Usuário Excluído', ''),
+
+                          this.listaUsuarios.splice(this.listaUsuarios.indexOf(usuario), 1),
+
+                          this.dataSource = new MatTableDataSource <Usuario> (this.listaUsuarios)
+
+                    ),
+                    error => (
+                          console.log(error),
+                          this.toast.error('Erro ao excluir o Usuário, causa: ', JSON.stringify(error))
+                    ),
+                    () => {                         
+                        this.renderizarComponenteListarUsuario(this.listaUsuarios);
+                    }
+
+              );
+
           }
       });
   }
+
+  renderizarComponenteListarUsuario(listaUsuarios: Array <Usuario>){
+    if (listaUsuarios && listaUsuarios.length === 0) {
+        this.salvarUsuarioComponent.esconderComponenteListarUsuario = true;
+    } else {
+        //this.listaUsuariosEmitter.emit(this.listaUsuarios); 
+        this.salvarUsuarioComponent.esconderComponenteListarUsuario = false;
+    }
+  }
+
 
 }
 

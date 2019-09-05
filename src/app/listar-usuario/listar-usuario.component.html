@@ -24,7 +24,7 @@
     <th style="text-align: center;" mat-header-cell *matHeaderCellDef> Tarefas </th>
     <td style="text-align: center;" mat-cell *matCellDef="let usuario"> 
        <mat-nav-list>
-        <a style="align: center;" mat-list-item *ngFor="let tarefa of usuario.listaTarefas"> {{ tarefa.nome }} </a>
+          <a mat-list-item *ngFor="let tarefa of usuario.listaTarefas"> {{ tarefa.nome }} </a>
       </mat-nav-list>   
     </td>
    
