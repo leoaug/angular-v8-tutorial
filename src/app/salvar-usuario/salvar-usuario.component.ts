@@ -41,7 +41,7 @@ export class SalvarUsuarioComponent implements OnInit {
                   this.esconderComponenteListarUsuario = false;
 
                   this.usuario = cloneDeep(JSON.parse(JSON.stringify(usuarioRetorno)));
-                  this.usuario.preEditar = false;
+                  //this.usuario.preEditar = false;
 
                   // commando para enviar o objeto usuario para o componente listat-usuario.component.ts
                   this.usuarioService.enviarUsuarioSubject.next(JSON.parse(JSON.stringify(this.usuario)));
@@ -57,13 +57,11 @@ export class SalvarUsuarioComponent implements OnInit {
                 this.usuario  = new Usuario();
 
                 // setando como default o valor do radioButton do formulario salvar.usuario.component.html
-                this.usuario.sexoUsuarioEnum = 'MASCULINO';   
+                this.usuario.sexoUsuarioEnum = 'MASCULINO';
 
                 dialog.close();
         });
 
-
-        
 
     }
 

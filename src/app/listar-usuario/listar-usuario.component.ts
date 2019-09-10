@@ -67,14 +67,25 @@ export class ListarUsuarioComponent implements OnInit {
                       usuario.preEditar = false;
                   });
 
-                  console.log("carregando todos = " + JSON.stringify(this.listaUsuarios));
+                  console.log('carregando todos = ' + JSON.stringify(this.listaUsuarios));
 
                   // só ira chamar nos evento do componente pai salvar-usuario.component.ts (onclick, e etc)
                   this.usuarioService.enviarUsuarioSubject.subscribe((usuarioRetorno) => {
 
+                      //const usuario = cloneDeep(JSON.parse(JSON.stringify(usuarioRetorno)));
+                      //usuario.preEditar = false;
+
                       this.listaUsuarios.push(usuarioRetorno);
-                    
-                      console.log("carregando todos com salvar = " + JSON.stringify(this.listaUsuarios));
+
+                      this.salvarUsuarioComponent.esconderComponenteListarUsuario = false;
+
+                      this.listaUsuarios.forEach((usuario) => {
+                          usuario.preEditar = false;
+                      });
+
+                      console.log('carregando todos com salvar = ' + JSON.stringify(this.listaUsuarios));
+
+                      this.dataSource = new MatTableDataSource<Usuario>(this.listaUsuarios);
 
                   }).add(() => {
                       this.dataSource = new MatTableDataSource<Usuario>(this.listaUsuarios);
@@ -106,12 +117,11 @@ export class ListarUsuarioComponent implements OnInit {
 
   // tslint:disable-next-line: use-lifecycle-interface
   ngAfterViewInit() {
-      //this.renderizarComponenteListarUsuario(this.listaUsuarios);
+      // this.renderizarComponenteListarUsuario(this.listaUsuarios);
       if (this.dataSource ) {
-       
-        this.dataSource = new MatTableDataSource<Usuario>(this.listaUsuarios);
-         //this.dataSource.paginator = this.paginator;
-        //console.log('insercaoo ngAfterViewInit= ' + JSON.stringify(this.listaUsuarios));
+
+        //this.dataSource = new MatTableDataSource<Usuario>(this.listaUsuarios);
+         // this.dataSource.paginator = this.paginator;
       }
 
   }
@@ -119,9 +129,7 @@ export class ListarUsuarioComponent implements OnInit {
 
   editarUsuario(usuario: Usuario, indexTable: number) {
 
-
       this.usuarioService.editarUsuario(usuario, indexTable, this.listaUsuarios, this.listaUsuariosAntesDaEdicao);
-
 
   }
 
