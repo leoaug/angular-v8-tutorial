@@ -8,15 +8,9 @@ import { Subject, Observable } from 'rxjs';
 })
 export class UsuarioService {
 
-  //enviarlistaUsuariosSubject: Subject<Array<Usuario>> = new Subject<Array<Usuario>>();
 
   enviarUsuarioSubject: Subject <Usuario> = new Subject <Usuario> ();
 
-  /** 
-  getEnviarlistaUsuariosSubjectObservable(): Observable <Array<Usuario>> {
-      return this.enviarlistaUsuariosSubject.asObservable();
-  }
-  */
   getEnviarUsuarioSubject(): Observable <Usuario> {
       return this.enviarUsuarioSubject.asObservable();
   }
@@ -31,6 +25,12 @@ export class UsuarioService {
 
       const headers =  new HttpHeaders().set('Content-Type', 'application/json');
       return this.http.post('http://localhost:8080/listatarefas/rest/usuario/salvarUsuario',  JSON.stringify(usuario), {headers});
+  }
+
+  alterarUsuario(usuario: Usuario) {
+
+       const headers =  new HttpHeaders().set('Content-Type', 'application/json');
+       return this.http.put('http://localhost:8080/listatarefas/rest/usuario/alterarUsuario', JSON.stringify(usuario), {headers});
   }
 
   excluirUsuario(usuario: Usuario) {

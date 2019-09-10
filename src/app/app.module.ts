@@ -16,7 +16,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 // tslint:disable-next-line: max-line-length
-import { MatInputModule, MatCardModule, MatTableModule, MatTabsModule, MatDialogModule, MatTooltipModule, MatDividerModule, MatListModule, MatProgressSpinnerModule } from '@angular/material';
+import { MatInputModule, MatCardModule, MatTableModule, MatTabsModule, MatDialogModule, MatTooltipModule, MatDividerModule, MatListModule, MatProgressSpinnerModule, MatPaginatorModule } from '@angular/material';
 import { UsuarioService } from './service/usuario.service';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -56,7 +56,8 @@ import { ToastrModule } from 'ngx-toastr';
     MatListModule,
     MatProgressSpinnerModule,
     ToastrModule.forRoot(),
-    MatInputModule
+    MatInputModule,
+    MatPaginatorModule
   ],
   providers: [
     UsuarioService,

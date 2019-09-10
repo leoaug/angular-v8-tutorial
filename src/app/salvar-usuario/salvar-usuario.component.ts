@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Usuario } from '../model/Usuario';
-
 import { UsuarioService } from '../service/usuario.service';
-import { cloneDeep } from 'lodash';
 import { MatDialog } from '@angular/material';
 import { LoadingDialogComponent } from '../loading-dialog/loading-dialog.component';
 import { ToastrService } from 'ngx-toastr';
@@ -14,13 +12,9 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class SalvarUsuarioComponent implements OnInit {
 
-  usuario: Usuario = new Usuario();
+    usuario: Usuario = new Usuario();
 
-  usuarioParam: Usuario;
-
-  //listaUsuarios: Array <Usuario> = [];
-
-  esconderComponenteListarUsuario = true;
+    esconderComponenteListarUsuario = true;
 
 
     constructor(public dialog: MatDialog,
@@ -36,13 +30,8 @@ export class SalvarUsuarioComponent implements OnInit {
     salvarUsuario() {
         const dialog =  this.dialog.open(LoadingDialogComponent, {});
 
-        // copiando o model usuario para usuarioParam para passar para o componente listar-usuario.component.ts
-        this.usuarioParam = cloneDeep(this.usuario);
-
-        this.usuarioParam.id = null;
-
         // salva o usuario usando serviço REST
-        this.usuarioService.salvarUsuario(this.usuarioParam)
+        this.usuarioService.salvarUsuario(this.usuario)
           .subscribe(
               usuarioRetorno => {
 
@@ -50,13 +39,8 @@ export class SalvarUsuarioComponent implements OnInit {
 
                   this.esconderComponenteListarUsuario = false;
 
-                  this.usuarioParam = cloneDeep(JSON.parse(JSON.stringify(usuarioRetorno)));
-
-                  //this.listaUsuarios.push( this.usuarioParam);
-
-                  // comando para guarda a listaUsuarioParams no  UsuarioService para recuperar no
-                  // componente listar-usuario.components.ts
-                  this.usuarioService.enviarUsuarioSubject.next(this.usuarioParam);
+                  // commando para enviar o objeto usuario para o componente listat-usuario.component.ts
+                  this.usuarioService.enviarUsuarioSubject.next(JSON.parse(JSON.stringify(usuarioRetorno)));
 
               },
               error => {
@@ -65,11 +49,8 @@ export class SalvarUsuarioComponent implements OnInit {
                   console.log(error);
               }
           ).add(() => {
-              //this.renderizarComponenteListarUsuario(this.listaUsuarios);
-              //this.esconderComponenteListarUsuario = false;
-
                dialog.close();
-          });
+        });
 
 
         // limpando o formulario salvar.usuario.component.html
@@ -80,19 +61,4 @@ export class SalvarUsuarioComponent implements OnInit {
 
     }
 
-    ngAfterViewInit() {
-      //this.renderizarComponenteListarUsuario(this.listaUsuarios);
-      //this.esconderComponenteListarUsuario = false;
-
-    }
-
-    /** 
-    renderizarComponenteListarUsuario(listaUsuarios: Array <Usuario>) {
-      if (listaUsuarios && listaUsuarios.length === 0) {
-          this.esconderComponenteListarUsuario = true;
-      } else {
-          this.esconderComponenteListarUsuario = false;
-      }
-    }
-    */
 }

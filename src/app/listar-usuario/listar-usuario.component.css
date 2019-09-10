@@ -1,3 +1,15 @@
 table {
   width: 100%;
 }
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+td, th {
+  width: 25%;
+}
+
+.mat-paginator-navigation-first {
+  background: #11c15b;
+}

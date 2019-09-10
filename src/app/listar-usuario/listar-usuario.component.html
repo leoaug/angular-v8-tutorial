@@ -1,61 +1,71 @@
+<div class="mat-elevation-z8">
 
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8"> 
+  <table mat-table [dataSource]="dataSource"> 
 
-  <!--- Note that these columns can be defined in any order.
-        The actual rendered columns are set as a property on the row definition" -->
-
- 
-
-  <!-- Name Column -->
-  <ng-container matColumnDef="Nome">
-    <th mat-header-cell *matHeaderCellDef> Nome </th>
-    <td mat-cell *matCellDef="let usuario"> {{ usuario.nome }} </td>
-  </ng-container>
-
-  <!-- Weight Column -->
-  <ng-container matColumnDef="Sexo">
-    <th mat-header-cell *matHeaderCellDef> Sexo </th>
-    <td mat-cell *matCellDef="let usuario"> {{ usuario.sexoUsuarioEnum }} </td>
-  </ng-container>
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+    <!-- Name Column -->
+    <ng-container matColumnDef="Nome">
+      <th mat-header-cell *matHeaderCellDef> Nome </th>
+      <td mat-cell *matCellDef="let usuario"> {{ usuario.nome }} </td>
+    </ng-container>
 
     <!-- Weight Column -->
-  <ng-container matColumnDef="Tarefas">
-    
-    <th style="text-align: center;" mat-header-cell *matHeaderCellDef> Tarefas </th>
-    <td style="text-align: center;" mat-cell *matCellDef="let usuario"> 
-       <mat-nav-list>
-          <a mat-list-item *ngFor="let tarefa of usuario.listaTarefas"> {{ tarefa.nome }} </a>
-      </mat-nav-list>   
-    </td>
-   
-  </ng-container>
+    <ng-container matColumnDef="Sexo">
+      <th mat-header-cell *matHeaderCellDef> Sexo </th>
+      <td mat-cell *matCellDef="let usuario"> {{ usuario.sexoUsuarioEnum }} </td>
+    </ng-container>
 
-  <ng-container matColumnDef="Ações">
-      <th style="text-align: center;" mat-header-cell *matHeaderCellDef> Ações </th>
-
-      <td style="text-align: center;padding: 1px;" mat-cell *matCellDef="let usuario">
-       
-          <button mat-mini-fab color="primary" 
-                  matTooltip="Excluir" 
-                  (click)="confirmarExcluirUsuario(usuario)">
-                
-                  <span class="mdc-fab__icon material-icons"> delete </span>
-         
-          </button>
+      <!-- Weight Column -->
+    <ng-container matColumnDef="Tarefas">
       
-          <button mat-mini-fab color="primary" 
-                  matTooltip="Editar">
-                <span class="mdc-fab__icon material-icons"> edit </span>
-          </button>
-             
-      </td>   
-     
+      <th style="text-align: center;" mat-header-cell *matHeaderCellDef> Tarefas </th>
+      <td style="text-align: center;" mat-cell *matCellDef="let usuario"> 
+        <mat-nav-list>
+            <a mat-list-item *ngFor="let tarefa of usuario.listaTarefas"> {{ tarefa.nome }} </a>
+        </mat-nav-list>   
+      </td>
+    
+    </ng-container>
 
-  </ng-container>
+    <ng-container matColumnDef="Ações">
+        <th style="text-align: center;" mat-header-cell *matHeaderCellDef> Ações </th>
+
+        <td style="text-align: center;padding: 1px;" mat-cell *matCellDef="let usuario">
+        
+            <button mat-mini-fab color="primary" 
+                    matTooltip="Editar">
+                  <span class="mdc-fab__icon material-icons"> edit </span>
+            </button>
+              
+            <button mat-mini-fab color="primary" 
+                    matTooltip="Excluir" 
+                    (click)="confirmarExcluirUsuario(usuario)">
+                  
+                    <span class="mdc-fab__icon material-icons"> delete </span>
+          
+            </button>
+        
+        </td>   
+      
+
+    </ng-container>
 
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
-</table>
+  </table>  
+
+  <!-- 
+  <mat-paginator [length]="100"
+              [pageSize]="10"
+              [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons>
+  </mat-paginator>
+-->
+
+</div>  
+<br/>
+<br/>
+
 
