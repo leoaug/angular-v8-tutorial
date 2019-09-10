@@ -1,11 +1,25 @@
 import { Injectable } from '@angular/core';
 import { Usuario } from '../model/Usuario';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Subject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsuarioService {
+
+  //enviarlistaUsuariosSubject: Subject<Array<Usuario>> = new Subject<Array<Usuario>>();
+
+  enviarUsuarioSubject: Subject <Usuario> = new Subject <Usuario> ();
+
+  /** 
+  getEnviarlistaUsuariosSubjectObservable(): Observable <Array<Usuario>> {
+      return this.enviarlistaUsuariosSubject.asObservable();
+  }
+  */
+  getEnviarUsuarioSubject(): Observable <Usuario> {
+      return this.enviarUsuarioSubject.asObservable();
+  }
 
   constructor(private http: HttpClient) { }
 
