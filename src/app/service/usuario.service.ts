@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Usuario } from '../model/Usuario';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Subject, Observable } from 'rxjs';
+import { cloneDeep } from 'lodash';
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +39,15 @@ export class UsuarioService {
       let parametros = new HttpParams();
       parametros = parametros.append('id', usuario.id.toString());
       return this.http.delete('http://localhost:8080/listatarefas/rest/usuario/excluirUsuario', {params: parametros});
+  }
+  editarUsuario(usuario: Usuario, indexTable: number, listaUsuarios: Array<Usuario>, listaUsuariosAntesDaEdicao: Array <Usuario>) {
+
+    usuario.preEditar = true;
+
+    listaUsuarios[indexTable] = usuario;
+
+    // salva o dado ante de cnfirmar a edição, caso ele cancele a edição
+    listaUsuariosAntesDaEdicao[indexTable] = cloneDeep(listaUsuarios[indexTable]);
   }
 
 }

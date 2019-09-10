@@ -7,13 +7,36 @@
     <!-- Name Column -->
     <ng-container matColumnDef="Nome">
       <th mat-header-cell *matHeaderCellDef> Nome </th>
-      <td mat-cell *matCellDef="let usuario"> {{ usuario.nome }} </td>
+      <td mat-cell *matCellDef="let usuario"> 
+        <div *ngIf="usuario.preEditar == false">
+            {{ usuario.nome }} 
+        </div>
+
+        <div *ngIf="usuario.preEditar == true">
+           <mat-form-field>
+              <input matInput placeholder="Nome" [(ngModel)]="usuario.nome"> 
+           </mat-form-field>
+        </div>
+
+      </td>
     </ng-container>
 
     <!-- Weight Column -->
     <ng-container matColumnDef="Sexo">
       <th mat-header-cell *matHeaderCellDef> Sexo </th>
-      <td mat-cell *matCellDef="let usuario"> {{ usuario.sexoUsuarioEnum }} </td>
+      <td mat-cell *matCellDef="let usuario"> 
+        <div *ngIf="usuario.preEditar === false">
+          {{ usuario.sexoUsuarioEnum }} 
+        </div>
+
+        <div *ngIf="usuario.preEditar === true">
+          <mat-radio-group aria-label="Selecione" [(ngModel)]="usuario.sexoUsuarioEnum">
+            <mat-radio-button value="MASCULINO">Masculino</mat-radio-button>
+            <mat-radio-button value="FEMININO">Feminino</mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+      </td>
     </ng-container>
 
       <!-- Weight Column -->
@@ -33,19 +56,35 @@
 
         <td style="text-align: center;padding: 1px;" mat-cell *matCellDef="let usuario">
         
-            <button mat-mini-fab color="primary" 
-                    matTooltip="Editar">
-                  <span class="mdc-fab__icon material-icons"> edit </span>
-            </button>
+            <div *ngIf="usuario.preEditar == false" style="display: inline-block;">
+                <button (click)="editarUsuario(usuario, dataSource.filteredData.indexOf(usuario))" 
+                        mat-mini-fab color="primary" 
+                        matTooltip="Editar">
+                      <span class="mdc-fab__icon material-icons"> edit </span>
+                </button>
+           
+                <button mat-mini-fab color="primary" 
+                        matTooltip="Excluir" 
+                        (click)="confirmarExcluirUsuario(usuario)">
+                      
+                        <span class="mdc-fab__icon material-icons"> delete </span>
               
-            <button mat-mini-fab color="primary" 
-                    matTooltip="Excluir" 
-                    (click)="confirmarExcluirUsuario(usuario)">
-                  
-                    <span class="mdc-fab__icon material-icons"> delete </span>
-          
-            </button>
-        
+                </button>
+            </div> 
+            <div *ngIf="usuario.preEditar == true" style="display: inline-block;">
+                <button (click)="confirmarEditarUsuario(usuario, dataSource.filteredData.indexOf(usuario))" 
+                        mat-mini-fab color="primary" 
+                        matTooltip="Confirmar">
+                      <span class="mdc-fab__icon material-icons"> done </span>
+                </button>
+
+                <button (click)="cancelarEditarUsuario(usuario, dataSource.filteredData.indexOf(usuario))"
+                        mat-mini-fab color="primary" 
+                        matTooltip="Cancelar">
+                      <span class="mdc-fab__icon material-icons"> block </span>
+                </button>
+            </div>
+
         </td>   
       
 
@@ -57,12 +96,12 @@
 
   </table>  
 
-  <!-- 
+  
   <mat-paginator [length]="100"
               [pageSize]="10"
               [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons>
   </mat-paginator>
--->
+
 
 </div>  
 <br/>

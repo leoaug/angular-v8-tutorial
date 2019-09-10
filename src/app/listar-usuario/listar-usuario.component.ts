@@ -7,6 +7,7 @@ import { UsuarioService } from '../service/usuario.service';
 import { LoadingDialogComponent } from '../loading-dialog/loading-dialog.component';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription, Observable } from 'rxjs';
+import { cloneDeep } from 'lodash';
 
 
 @Component({
@@ -18,6 +19,8 @@ export class ListarUsuarioComponent implements OnInit {
 
 
   listaUsuarios: Array <Usuario> = [];
+
+  listaUsuariosAntesDaEdicao: Array <Usuario> = [];
 
   dataSource: MatTableDataSource <Usuario>;
 
@@ -42,7 +45,7 @@ export class ListarUsuarioComponent implements OnInit {
 
           this.dataSource = new MatTableDataSource<Usuario>(this.listaUsuarios);
           this.dataSource.paginator = this.paginator;
-          console.log(this.listaUsuarios);
+          //console.log(this.listaUsuarios);
 
     });
 
@@ -60,10 +63,18 @@ export class ListarUsuarioComponent implements OnInit {
 
                   this.salvarUsuarioComponent.esconderComponenteListarUsuario = false;
 
+                  this.listaUsuarios.forEach((usuario) => {
+                      usuario.preEditar = false;
+                  });
+
+                  console.log("carregando todos = " + JSON.stringify(this.listaUsuarios));
+
                   // só ira chamar nos evento do componente pai salvar-usuario.component.ts (onclick, e etc)
                   this.usuarioService.enviarUsuarioSubject.subscribe((usuarioRetorno) => {
 
                       this.listaUsuarios.push(usuarioRetorno);
+                    
+                      console.log("carregando todos com salvar = " + JSON.stringify(this.listaUsuarios));
 
                   }).add(() => {
                       this.dataSource = new MatTableDataSource<Usuario>(this.listaUsuarios);
@@ -96,15 +107,50 @@ export class ListarUsuarioComponent implements OnInit {
   // tslint:disable-next-line: use-lifecycle-interface
   ngAfterViewInit() {
       //this.renderizarComponenteListarUsuario(this.listaUsuarios);
-     
-      //if(this.dataSource ){
-        //this.dataSource = new MatTableDataSource<Usuario>(this.listaUsuarios);
+      if (this.dataSource ) {
+       
+        this.dataSource = new MatTableDataSource<Usuario>(this.listaUsuarios);
          //this.dataSource.paginator = this.paginator;
         //console.log('insercaoo ngAfterViewInit= ' + JSON.stringify(this.listaUsuarios));
-      //}
+      }
 
   }
 
+
+  editarUsuario(usuario: Usuario, indexTable: number) {
+
+
+      this.usuarioService.editarUsuario(usuario, indexTable, this.listaUsuarios, this.listaUsuariosAntesDaEdicao);
+
+
+  }
+
+  confirmarEditarUsuario(usuario: Usuario, indexTable: number) {
+
+    usuario.preEditar = false;
+
+    this.listaUsuarios[indexTable] = usuario;
+
+    this.listaUsuariosAntesDaEdicao[indexTable] = this.listaUsuarios[indexTable];
+
+    this.dataSource = new MatTableDataSource <Usuario> (this.listaUsuarios);
+
+
+  }
+
+  cancelarEditarUsuario(usuario: Usuario, indexTable: number) {
+
+
+    usuario = this.listaUsuariosAntesDaEdicao[indexTable];
+
+    usuario.preEditar = false;
+
+    this.listaUsuarios[indexTable] = cloneDeep(usuario);
+
+    this.dataSource = new MatTableDataSource <Usuario> (this.listaUsuarios);
+
+
+  }
 
   confirmarExcluirUsuario(usuario: Usuario): void {
       const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
