@@ -1,0 +1,26 @@
+<mat-card>
+    Cadastro de Tarefas
+    <div class="example-container">
+
+        <mat-form-field>
+            <input matInput placeholder="Nome" [(ngModel)]="tarefa.nome">
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Usuário</mat-label>
+            <mat-select>
+                <mat-option *ngFor="let usuario of listaUsuarios" ngDefaultControl [value]="tarefa.usuario" name="tarefa.usuario" [(ngModel)]="tarefa.usuario">
+                    {{ usuario.nome }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput [matDatepicker]="tarefa.dataInicio" placeholder="Data Início"  [(ngModel)]="tarefa.dataInicio">
+            <mat-datepicker-toggle matSuffix [for]="tarefa.dataInicio" ngDefaultControl></mat-datepicker-toggle>
+            <mat-datepicker touchUi #tarefa.dataInicio></mat-datepicker>
+        </mat-form-field>
+
+    </div>
+
+</mat-card>    

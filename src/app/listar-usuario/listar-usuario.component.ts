@@ -40,12 +40,12 @@ export class ListarUsuarioComponent implements OnInit {
 
     this.carregarListaUsuarios();
 
-    // só ira chamar nos evento do componente pai salvar-usuario.component.ts (onclick, e etc)
-    this.subscription = this.usuarioService.getEnviarUsuarioSubject().subscribe(() => {
+    // só ira ficar 'escutando' os eventos do comando 'this.usuarioService.enviarUsuarioParaOutroComponente(this.usuario);
+    // do componente pai salvar-usuario.component.ts (onclick, e etc)
+    this.subscription = this.usuarioService.escutarUsuarioDeOutroComponente().subscribe(() => {
 
           this.dataSource = new MatTableDataSource<Usuario>(this.listaUsuarios);
           this.dataSource.paginator = this.paginator;
-          //console.log(this.listaUsuarios);
 
     });
 
@@ -63,25 +63,19 @@ export class ListarUsuarioComponent implements OnInit {
 
                   this.salvarUsuarioComponent.esconderComponenteListarUsuario = false;
 
-                  this.listaUsuarios.forEach((usuario) => {
-                      usuario.preEditar = false;
-                  });
+                  this.usuarioService.preencheListaComNovosAtributos(this.listaUsuarios);
 
                   console.log('carregando todos = ' + JSON.stringify(this.listaUsuarios));
 
                   // só ira chamar nos evento do componente pai salvar-usuario.component.ts (onclick, e etc)
-                  this.usuarioService.enviarUsuarioSubject.subscribe((usuarioRetorno) => {
+                  this.usuarioService.receberUsuarioDeOutroComponente().subscribe((usuarioRetorno) => {
 
-                      //const usuario = cloneDeep(JSON.parse(JSON.stringify(usuarioRetorno)));
-                      //usuario.preEditar = false;
 
                       this.listaUsuarios.push(usuarioRetorno);
 
                       this.salvarUsuarioComponent.esconderComponenteListarUsuario = false;
 
-                      this.listaUsuarios.forEach((usuario) => {
-                          usuario.preEditar = false;
-                      });
+                      this.usuarioService.preencheListaComNovosAtributos(this.listaUsuarios);
 
                       console.log('carregando todos com salvar = ' + JSON.stringify(this.listaUsuarios));
 
@@ -135,13 +129,21 @@ export class ListarUsuarioComponent implements OnInit {
 
   confirmarEditarUsuario(usuario: Usuario, indexTable: number) {
 
-    usuario.preEditar = false;
+    const dialog =  this.dialog.open(LoadingDialogComponent, {});
 
-    this.listaUsuarios[indexTable] = usuario;
+    this.usuarioService.alterarUsuario(usuario).subscribe (
+        sucesso => {
+            this.usuarioService.confirmarEditarUsuario(usuario, indexTable, this.dataSource , this.listaUsuarios, this.listaUsuariosAntesDaEdicao);
+            dialog.close();
+            this.toast.success('Usuário Editado.', '');
+        },
+        error => {
+            this.toast.error('Erro ao editar o usuário, causa: ', JSON.stringify(error));
+            console.log(error);
+        }
 
-    this.listaUsuariosAntesDaEdicao[indexTable] = this.listaUsuarios[indexTable];
+    );
 
-    this.dataSource = new MatTableDataSource <Usuario> (this.listaUsuarios);
 
 
   }

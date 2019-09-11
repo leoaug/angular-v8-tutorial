@@ -16,12 +16,13 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 // tslint:disable-next-line: max-line-length
-import { MatInputModule, MatCardModule, MatTableModule, MatTabsModule, MatDialogModule, MatTooltipModule, MatDividerModule, MatListModule, MatProgressSpinnerModule, MatPaginatorModule } from '@angular/material';
+import { MatInputModule, MatCardModule, MatTableModule, MatTabsModule, MatDialogModule, MatTooltipModule, MatDividerModule, MatListModule, MatProgressSpinnerModule, MatPaginatorModule, MatDatepickerModule, MatNativeDateModule } from '@angular/material';
 import { UsuarioService } from './service/usuario.service';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LoadingDialogComponent } from './loading-dialog/loading-dialog.component';
 import { ToastrModule } from 'ngx-toastr';
+import { SalvarTarefaComponent } from './salvar-tarefa/salvar-tarefa.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { ToastrModule } from 'ngx-toastr';
     SalvarUsuarioComponent,
     AlterarUsuarioComponent,
     ConfirmationDialogComponent,
-    LoadingDialogComponent
+    LoadingDialogComponent,
+    SalvarTarefaComponent
   ],
   imports: [
     HttpClientModule,
@@ -44,6 +46,8 @@ import { ToastrModule } from 'ngx-toastr';
     SlimLoadingBarModule,
     MatFormFieldModule,
     MatButtonModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     MatCheckboxModule,
     MatRadioModule,
     MatSelectModule,

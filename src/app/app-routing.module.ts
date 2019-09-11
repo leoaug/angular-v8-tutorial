@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SalvarUsuarioComponent } from './salvar-usuario/salvar-usuario.component';
-import { AlterarUsuarioComponent } from './alterar-usuario/alterar-usuario.component';
-import { ListarUsuarioComponent } from './listar-usuario/listar-usuario.component';
+import { SalvarTarefaComponent } from './salvar-tarefa/salvar-tarefa.component';
 
 
 const routes: Routes = [
@@ -12,7 +11,7 @@ const routes: Routes = [
   },
   {
     path: "criarTarefa",
-    component: AlterarUsuarioComponent
+    component: SalvarTarefaComponent
   }
 
 ];
