@@ -6,6 +6,11 @@
             <input matInput placeholder="Nome" [(ngModel)]="tarefa.nome">
         </mat-form-field>
 
+        <mat-radio-group aria-label="Selecione" [(ngModel)]="tarefa.statusTarefaEnum">
+            <mat-radio-button value="ATIVA">Ativa</mat-radio-button>
+            <mat-radio-button value="CANCELADA">Cancelada</mat-radio-button>
+        </mat-radio-group>
+
         <mat-form-field>
             <mat-label>Usuário</mat-label>
             <mat-select [(ngModel)]="tarefa.usuario">

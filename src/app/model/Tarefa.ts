@@ -6,4 +6,5 @@ export class Tarefa {
     usuario: Usuario;
     dataInicio: Date;
     dataFim: Date;
+    statusTarefaEnum: string;
 }

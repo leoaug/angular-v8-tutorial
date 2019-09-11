@@ -5,6 +5,8 @@ import { Usuario } from '../model/Usuario';
 import { LoadingDialogComponent } from '../loading-dialog/loading-dialog.component';
 import { MatDialog, DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { TarefaService } from '../service/tarefa.service';
+import { ToastrService } from 'ngx-toastr';
 
 export const MY_FORMATS = {
   parse: {
@@ -37,7 +39,9 @@ export class SalvarTarefaComponent implements OnInit {
   listaUsuarios: Array <Usuario> = [];
 
   constructor(private usuarioService: UsuarioService,
+              private tarefaService: TarefaService,
               private dialog: MatDialog,
+              private toast: ToastrService,
               private adapter: DateAdapter <any> ) { }
 
   ngOnInit() {
@@ -46,6 +50,7 @@ export class SalvarTarefaComponent implements OnInit {
 
       // inicializa o usuario da tarefa
       this.tarefa.usuario = new Usuario();
+      this.tarefa.statusTarefaEnum = 'ATIVA';
 
       this.usuarioService.getUsuarios().subscribe (
          listaUsuarios => {
@@ -58,7 +63,25 @@ export class SalvarTarefaComponent implements OnInit {
 
   salvarTarefa() {
 
-    console.log(this.tarefa);
+    const dialog =  this.dialog.open(LoadingDialogComponent, {});
+
+     this.tarefaService.salvarTarefa(this.tarefa).subscribe(
+        respostaTarefa => {
+            this.toast.success('Tarefa Salva.', '');
+            dialog.close();
+        },
+        error => {
+          this.toast.error('Erro ao cadastrar, causa: ' + JSON.stringify(error));
+        }
+     ).add(() => {
+            // limpando o formulario salvar-tarefa.component.html
+            this.tarefa  = new Tarefa();
+            this.tarefa.usuario = new Usuario();
+            this.tarefa.statusTarefaEnum = 'ATIVA';
+
+            dialog.close();
+
+      });
 
   }
 
