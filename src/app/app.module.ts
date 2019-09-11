@@ -64,7 +64,7 @@ import { SalvarTarefaComponent } from './salvar-tarefa/salvar-tarefa.component';
     MatPaginatorModule
   ],
   providers: [
-    UsuarioService,
+    UsuarioService
   ],
   entryComponents: [
     ConfirmationDialogComponent,

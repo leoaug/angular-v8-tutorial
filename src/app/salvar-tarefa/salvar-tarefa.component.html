@@ -8,8 +8,8 @@
 
         <mat-form-field>
             <mat-label>Usuário</mat-label>
-            <mat-select>
-                <mat-option *ngFor="let usuario of listaUsuarios" ngDefaultControl [value]="tarefa.usuario" name="tarefa.usuario" [(ngModel)]="tarefa.usuario">
+            <mat-select [(ngModel)]="tarefa.usuario">
+                <mat-option *ngFor="let usuario of listaUsuarios" ngDefaultControl [value]="usuario" name="usuario">
                     {{ usuario.nome }}
                 </mat-option>
             </mat-select>
@@ -20,6 +20,15 @@
             <mat-datepicker-toggle matSuffix [for]="dataInicio"></mat-datepicker-toggle>
             <mat-datepicker #dataInicio></mat-datepicker>
         </mat-form-field>
+
+        <mat-form-field>
+            <input matInput [matDatepicker]="dataFim" placeholder="Data Fim"  [(ngModel)]="tarefa.dataFim">
+            <mat-datepicker-toggle matSuffix [for]="dataFim"></mat-datepicker-toggle>  
+            <mat-datepicker #dataFim></mat-datepicker> 
+        </mat-form-field>
+
+         <button mat-raised-button (click)="salvarTarefa()">Salvar</button> 
+
 
     </div>
 
