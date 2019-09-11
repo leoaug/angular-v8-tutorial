@@ -16,9 +16,9 @@
         </mat-form-field>
 
         <mat-form-field>
-            <input matInput [matDatepicker]="tarefa.dataInicio" placeholder="Data Início"  [(ngModel)]="tarefa.dataInicio">
-            <mat-datepicker-toggle matSuffix [for]="tarefa.dataInicio" ngDefaultControl></mat-datepicker-toggle>
-            <mat-datepicker touchUi #tarefa.dataInicio></mat-datepicker>
+            <input matInput [matDatepicker]="dataInicio" placeholder="Data Início"  [(ngModel)]="tarefa.dataInicio">
+            <mat-datepicker-toggle matSuffix [for]="dataInicio"></mat-datepicker-toggle>
+            <mat-datepicker #dataInicio></mat-datepicker>
         </mat-form-field>
 
     </div>
