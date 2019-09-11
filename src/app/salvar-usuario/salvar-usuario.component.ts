@@ -40,7 +40,7 @@ export class SalvarUsuarioComponent implements OnInit {
 
                   this.esconderComponenteListarUsuario = false;
 
-                  this.usuario = cloneDeep(JSON.parse(JSON.stringify(usuarioRetorno)));
+                  this.usuario =  cloneDeep(JSON.parse(JSON.stringify(usuarioRetorno)));
 
                   // commando para enviar o objeto usuario para o componente listat-usuario.component.ts
                   this.usuarioService.enviarUsuarioParaOutroComponente(this.usuario);

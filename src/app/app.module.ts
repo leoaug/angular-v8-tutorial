@@ -1,12 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ListarUsuarioComponent } from './listar-usuario/listar-usuario.component';
 import { SalvarUsuarioComponent } from './salvar-usuario/salvar-usuario.component';
-import { AlterarUsuarioComponent } from './alterar-usuario/alterar-usuario.component';
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -23,6 +22,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoadingDialogComponent } from './loading-dialog/loading-dialog.component';
 import { ToastrModule } from 'ngx-toastr';
 import { SalvarTarefaComponent } from './salvar-tarefa/salvar-tarefa.component';
+import { ListarTarefaComponent } from './listar-tarefa/listar-tarefa.component';
 
 
 @NgModule({
@@ -30,10 +30,10 @@ import { SalvarTarefaComponent } from './salvar-tarefa/salvar-tarefa.component';
     AppComponent,
     ListarUsuarioComponent,
     SalvarUsuarioComponent,
-    AlterarUsuarioComponent,
     ConfirmationDialogComponent,
     LoadingDialogComponent,
-    SalvarTarefaComponent
+    SalvarTarefaComponent,
+    ListarTarefaComponent
   ],
   imports: [
     HttpClientModule,
@@ -64,7 +64,8 @@ import { SalvarTarefaComponent } from './salvar-tarefa/salvar-tarefa.component';
     MatPaginatorModule
   ],
   providers: [
-    UsuarioService
+    UsuarioService,
+    DatePipe
   ],
   entryComponents: [
     ConfirmationDialogComponent,

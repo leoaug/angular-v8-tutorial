@@ -7,6 +7,7 @@ import { MatDialog, DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angu
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { TarefaService } from '../service/tarefa.service';
 import { ToastrService } from 'ngx-toastr';
+import { ObjetoService } from '../service/objeto.service';
 
 export const MY_FORMATS = {
   parse: {
@@ -40,6 +41,7 @@ export class SalvarTarefaComponent implements OnInit {
 
   constructor(private usuarioService: UsuarioService,
               private tarefaService: TarefaService,
+              private objetoService: ObjetoService,
               private dialog: MatDialog,
               private toast: ToastrService,
               private adapter: DateAdapter <any> ) { }
@@ -63,11 +65,16 @@ export class SalvarTarefaComponent implements OnInit {
 
   salvarTarefa() {
 
-    const dialog =  this.dialog.open(LoadingDialogComponent, {});
+     const dialog =  this.dialog.open(LoadingDialogComponent, {});
 
      this.tarefaService.salvarTarefa(this.tarefa).subscribe(
         respostaTarefa => {
             this.toast.success('Tarefa Salva.', '');
+
+            this.tarefa = this.objetoService.copiarObjeto(respostaTarefa);
+
+            this.tarefaService.enviarTarefaParaOutroComponente(this.tarefa);
+
             dialog.close();
         },
         error => {
