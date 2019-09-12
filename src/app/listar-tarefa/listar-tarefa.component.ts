@@ -5,6 +5,7 @@ import { TarefaService } from '../service/tarefa.service';
 import { Subscription } from 'rxjs';
 import { LoadingDialogComponent } from '../loading-dialog/loading-dialog.component';
 import { DatePipe } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-listar-tarefa',
@@ -25,7 +26,8 @@ export class ListarTarefaComponent implements OnInit {
 
   constructor(private tarefaService: TarefaService,
               private dialog: MatDialog,
-              public datePipe: DatePipe) { }
+              public datePipe: DatePipe,
+              private toastService: ToastrService) { }
 
   ngOnInit() {
       this.carregarListaTarefas();
@@ -47,22 +49,27 @@ export class ListarTarefaComponent implements OnInit {
             this.dataSource = new MatTableDataSource <Tarefa> (this.listaTarefas);
 
 
-            this.tarefaService.receberTarefaDeOutroComponente().subscribe(
-                  tarefaRetorno => {
+            this.tarefaService.receberTarefaDeOutroComponente().subscribe(tarefaRetorno => {
                     this.listaTarefas.push(tarefaRetorno);
                     this.dataSource = new MatTableDataSource <Tarefa> (this.listaTarefas);
+            }).add(() => {
                     dialog.close();
-                  }
+            });
 
-            );
 
-            dialog.close();
         },
         error => {
-          console.log(error);
-        }
 
-      );
+          this.toastService.error('Erro ao carregar as tarefas, causa: ', JSON.stringify(error));
+
+          console.log(error);
+
+          //dialog.close();
+
+        }
+    ).add(() => {
+          dialog.close();
+    });
 
   }
 

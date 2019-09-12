@@ -8,6 +8,7 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { TarefaService } from '../service/tarefa.service';
 import { ToastrService } from 'ngx-toastr';
 import { ObjetoService } from '../service/objeto.service';
+import { FormControl, Validators, FormGroup } from '@angular/forms';
 
 export const MY_FORMATS = {
   parse: {
@@ -39,6 +40,7 @@ export class SalvarTarefaComponent implements OnInit {
 
   listaUsuarios: Array <Usuario> = [];
 
+
   constructor(private usuarioService: UsuarioService,
               private tarefaService: TarefaService,
               private objetoService: ObjetoService,
@@ -58,6 +60,12 @@ export class SalvarTarefaComponent implements OnInit {
          listaUsuarios => {
            this.listaUsuarios = listaUsuarios;
            dialog.close();
+         },
+         error => {
+           dialog.close();
+            this.toast.error('Erro ao carrgar os usuarios, causa: ' + JSON.stringify(error));
+
+
          }
       );
 
@@ -65,31 +73,35 @@ export class SalvarTarefaComponent implements OnInit {
 
   salvarTarefa() {
 
-     const dialog =  this.dialog.open(LoadingDialogComponent, {});
 
-     this.tarefaService.salvarTarefa(this.tarefa).subscribe(
-        respostaTarefa => {
-            this.toast.success('Tarefa Salva.', '');
+        const dialog =  this.dialog.open(LoadingDialogComponent, {});
 
-            this.tarefa = this.objetoService.copiarObjeto(respostaTarefa);
+        this.tarefaService.salvarTarefa(this.tarefa).subscribe(
+            respostaTarefa => {
+                this.toast.success('Tarefa Salva.', '');
 
-            this.tarefaService.enviarTarefaParaOutroComponente(this.tarefa);
+                this.tarefa = this.objetoService.copiarObjeto(respostaTarefa);
 
-            dialog.close();
-        },
-        error => {
-          this.toast.error('Erro ao cadastrar, causa: ' + JSON.stringify(error));
-        }
-     ).add(() => {
-            // limpando o formulario salvar-tarefa.component.html
-            this.tarefa  = new Tarefa();
-            this.tarefa.usuario = new Usuario();
-            this.tarefa.statusTarefaEnum = 'ATIVA';
+                this.tarefaService.enviarTarefaParaOutroComponente(this.tarefa);
 
-            dialog.close();
+                dialog.close();
+            },
+            error => {
+              this.toast.error('Erro ao cadastrar, causa: ' + JSON.stringify(error));
 
-      });
+            }
+        ).add(() => {
+                // limpando o formulario salvar-tarefa.component.html
+                this.tarefa  = new Tarefa();
+                this.tarefa.usuario = new Usuario();
+                this.tarefa.statusTarefaEnum = 'ATIVA';
+
+                dialog.close();
+
+          });
+
 
   }
+  
 
 }

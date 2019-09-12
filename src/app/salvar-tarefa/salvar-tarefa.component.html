@@ -1,41 +1,71 @@
 <mat-card>
-    Cadastro de Tarefas
-    <div class="example-container">
+    Cadastro de Tarefas  
+    <form name="form" (ngSubmit)="f.form.valid && salvarTarefa()" #f="ngForm">
+          <div class="example-container">      
+                <div *ngIf="f.submitted && nomeTarefaModel.invalid">Informe o nome</div>  
+                <mat-form-field>
+                    <input matInput placeholder="Nome" 
+                        name="nomeTarefaModel" 
+                        #nomeTarefaModel="ngModel"
+                        [(ngModel)]="tarefa.nome" 
+                        [ngClass]="{ 'is-invalid': f.submitted && nomeTarefaModel.invalid }" 
+                        required>                            
+                </mat-form-field>
 
-        <mat-form-field>
-            <input matInput placeholder="Nome" [(ngModel)]="tarefa.nome">
-        </mat-form-field>
+                <div *ngIf="f.submitted && statusTarefaEnum.invalid">Informe o Status</div>    
+                <mat-radio-group aria-label="Selecione" 
+                                name="statusTarefaEnum"
+                                #statusTarefaEnum="ngModel"
+                                [(ngModel)]="tarefa.statusTarefaEnum"
+                                [ngClass]="{ 'is-invalid': f.submitted && statusTarefaEnum.invalid }" 
+                                #acceptTerms="ngModel"  required>
+                    <mat-radio-button value="ATIVA">Ativa</mat-radio-button>
+                    <mat-radio-button value="CANCELADA">Cancelada</mat-radio-button>
+                </mat-radio-group>
+                 
+                <mat-form-field>
+                    <mat-label>Usuário</mat-label>
+                    <mat-select name="usuarioModel" 
+                                #usuarioModel="ngModel"
+                                [(ngModel)]="tarefa.usuario"
+                                [ngClass]="{ 'is-invalid': f.submitted && usuarioModel.invalid }" 
+                                #acceptTerms="ngModel"  required>
+                        <mat-option *ngFor="let usuario of listaUsuarios" ngDefaultControl [value]="usuario" name="usuario">
+                            {{ usuario.nome }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                
+                <div *ngIf="f.submitted && dataInicioModel.invalid">Informe a Data Inicio</div>  
+                <mat-form-field>
+                    <input matInput [matDatepicker]="dataInicio" 
+                          placeholder="Data Início"  
+                          name="dataInicioModel"
+                          #dataInicioModel="ngModel"
+                          [(ngModel)]="tarefa.dataInicio"
+                          [ngClass]="{ 'is-invalid': f.submitted && dataInicioModel.invalid }" 
+                          #acceptTerms="ngModel"  required>  
+                    <mat-datepicker-toggle matSuffix [for]="dataInicio"></mat-datepicker-toggle>
+                    <mat-datepicker #dataInicio></mat-datepicker>
+                </mat-form-field>
 
-        <mat-radio-group aria-label="Selecione" [(ngModel)]="tarefa.statusTarefaEnum">
-            <mat-radio-button value="ATIVA">Ativa</mat-radio-button>
-            <mat-radio-button value="CANCELADA">Cancelada</mat-radio-button>
-        </mat-radio-group>
-
-        <mat-form-field>
-            <mat-label>Usuário</mat-label>
-            <mat-select [(ngModel)]="tarefa.usuario">
-                <mat-option *ngFor="let usuario of listaUsuarios" ngDefaultControl [value]="usuario" name="usuario">
-                    {{ usuario.nome }}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-
-        <mat-form-field>
-            <input matInput [matDatepicker]="dataInicio" placeholder="Data Início"  [(ngModel)]="tarefa.dataInicio">
-            <mat-datepicker-toggle matSuffix [for]="dataInicio"></mat-datepicker-toggle>
-            <mat-datepicker #dataInicio></mat-datepicker>
-        </mat-form-field>
-
-        <mat-form-field>
-            <input matInput [matDatepicker]="dataFim" placeholder="Data Fim"  [(ngModel)]="tarefa.dataFim">
-            <mat-datepicker-toggle matSuffix [for]="dataFim"></mat-datepicker-toggle>  
-            <mat-datepicker #dataFim></mat-datepicker> 
-        </mat-form-field>
-
-         <button mat-raised-button (click)="salvarTarefa()">Salvar</button> 
-
-
-    </div>
+                <div *ngIf="f.submitted && dataFimModel.invalid">Informe a Data Inicio</div>  
+                <mat-form-field>
+                    <input matInput [matDatepicker]="dataFim" 
+                           placeholder="Data Fim"  
+                           name="dataFimModel"
+                           #dataFimModel="ngModel"
+                           [(ngModel)]="tarefa.dataFim"
+                           [ngClass]="{ 'is-invalid': f.submitted && dataFimModel.invalid }" 
+                           #acceptTerms="ngModel"  required>  
+                    <mat-datepicker-toggle matSuffix [for]="dataFim"></mat-datepicker-toggle>  
+                    <mat-datepicker #dataFim></mat-datepicker> 
+                </mat-form-field>
+                
+                <button mat-raised-button>Salvar</button> 
+        </div>
+    </form>       
+   
 
 </mat-card>    
 

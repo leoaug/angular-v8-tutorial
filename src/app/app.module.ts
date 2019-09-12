@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { ListarUsuarioComponent } from './listar-usuario/listar-usuario.component';
 import { SalvarUsuarioComponent } from './salvar-usuario/salvar-usuario.component';
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule, FormControlDirective } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
