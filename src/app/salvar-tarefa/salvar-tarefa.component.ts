@@ -73,7 +73,6 @@ export class SalvarTarefaComponent implements OnInit {
 
   salvarTarefa() {
 
-
         const dialog =  this.dialog.open(LoadingDialogComponent, {});
 
         this.tarefaService.salvarTarefa(this.tarefa).subscribe(

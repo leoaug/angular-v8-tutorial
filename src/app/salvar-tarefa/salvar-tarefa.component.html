@@ -3,7 +3,7 @@
     <form name="form" (ngSubmit)="f.form.valid && salvarTarefa()" #f="ngForm">
           <div class="example-container">      
                 <div *ngIf="f.submitted && nomeTarefaModel.invalid">Informe o nome</div>  
-                <mat-form-field>
+                <mat-form-field> 
                     <input matInput placeholder="Nome" 
                         name="nomeTarefaModel" 
                         #nomeTarefaModel="ngModel"
